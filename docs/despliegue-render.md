@@ -10,7 +10,7 @@ TODO [E1] Cuando tu API esté desplegada, escribe la URL pública en la sección
 
 - Tu proyecto funciona en local: `npm install`, `npm test` y `npm start` terminan bien.
 - Tienes una cuenta en GitHub y otra en Render.
-- Si tu proyecto usa SQLite, ten en cuenta que los datos viven en un archivo. Consulta en la documentación de la plataforma si el almacenamiento conserva archivos entre despliegues; si no lo hace, los datos podrían perderse. Con la variante Mongoose, la base de datos es un servicio aparte.
+- Tu API necesita una base MongoDB accesible desde Internet y su cadena de conexión. La base de datos es un servicio aparte de tu aplicación; consulta la documentación de tu proveedor para obtenerla.
 
 ## Los seis pasos
 
@@ -25,10 +25,8 @@ TODO [E1] Cuando tu API esté desplegada, escribe la URL pública en la sección
    | Variable | Qué poner |
    |---|---|
    | `PORT` | Normalmente no hace falta definirla: el código usa `process.env.PORT` si la plataforma la entrega. Verifica en la documentación de Render. |
-   | `DB_FILE` | Ruta del archivo SQLite, si quieres cambiar la de por defecto. |
+   | `MONGODB_URI` | La cadena de conexión a tu base MongoDB. Contiene credenciales: ponla solo en el panel. |
    | `API_KEY` | La clave que exigirá la API en las rutas que modifican datos. Invéntala tú y no la publiques. |
-
-   Con la variante Mongoose, agrega también `MONGODB_URI` con la cadena de conexión de tu base de datos.
 
 5. **Define el comando de build y el de arranque**: el de build es `npm install` y el de arranque es `npm start`.
 

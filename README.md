@@ -2,7 +2,7 @@
 
 Plantilla (starter) del proyecto integrador final del curso **Node.js Básico**, REDEC-UNAM / Educación Continua FESC, del 19 al 23 de octubre de 2026. El proyecto lo desarrolla cada participante, o un equipo de hasta 3 personas, y es la base de la evaluación final (manual, sección 10).
 
-La plantilla incluye una API de ejemplo mínima y funcional sobre el recurso «libros», con Express y SQLite. **No es la solución**: es el punto de partida que debes reemplazar por tu propio dominio.
+La plantilla incluye una API de ejemplo mínima y funcional sobre el recurso «libros», con Express y **MongoDB (Mongoose)**. Esta es la rama `variante-mongoose`; la rama `main` es la misma API con SQLite. **No es la solución**: es el punto de partida que debes reemplazar por tu propio dominio.
 
 > Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
 
@@ -37,7 +37,7 @@ Este README tiene dos partes:
 
 ### 2. Prepara el entorno
 
-Necesitas **Node.js 24** (la versión LTS que instalan en la Sesión 1), npm y Git. Con NVM:
+Necesitas **Node.js 24** (la versión LTS que instalan en la Sesión 1), npm, Git y una **base de datos MongoDB**: instalada en tu equipo o en un servicio en la nube. Con NVM:
 
 ```bash
 nvm install 24
@@ -55,7 +55,7 @@ cp .env.example .env
 npm run dev
 ```
 
-En Windows (cmd) copia el archivo con `copy .env.example .env`. Abre <http://localhost:3000/libros> y verás una lista vacía. `npm test` ejecuta las pruebas.
+En Windows (cmd) copia el archivo con `copy .env.example .env`. Antes de arrancar, abre `.env` y escribe en `MONGODB_URI` la cadena de conexión de tu base de datos, por ejemplo `mongodb://127.0.0.1:27017/biblioteca` para una base local. Con el servidor en marcha, <http://localhost:3000/libros> muestra una lista vacía. `npm test` ejecuta las pruebas (necesitan MongoDB, ver «Pruebas»).
 
 > **Aviso sobre `npm audit`.** Al instalar, npm puede mostrar «3 high severity vulnerabilities» en `nodemon`. Es un aviso de una dependencia de desarrollo sin versión corregida y no afecta a la API en ejecución. **No ejecutes `npm audit fix --force`**: instalaría una versión de `nodemon` de hace años y rompería `npm run dev`.
 
@@ -78,9 +78,9 @@ El código marca con `TODO [R#]` los lugares donde debes completar o adaptar alg
 
 [GUIA_POR_SESION.md](GUIA_POR_SESION.md) indica qué avanzar al terminar cada sesión y qué ejercicios del manual se relacionan.
 
-### 6. Variante con MongoDB (opcional)
+### 6. Variante con SQLite
 
-La rama `variante-mongoose` es la misma API con **MongoDB y Mongoose** en lugar de SQLite (manual §5.1, opción A). Necesitas una base MongoDB propia y su cadena de conexión en la variable `MONGODB_URI`. Si quieres partir de esa variante, al crear tu repositorio desde la plantilla marca la opción **Include all branches** y cambia a la rama con `git switch variante-mongoose`.
+Esta rama usa **MongoDB y Mongoose** (manual §5.1, opción A). La rama `main` es la misma API con **SQLite** (opción B), que no necesita ningún servicio externo. Si prefieres SQLite, al crear tu repositorio desde la plantilla marca la opción **Include all branches** y cambia a esa rama con `git switch main`.
 
 ### 7. Cuando termines
 
@@ -101,6 +101,7 @@ Ejemplo de la plantilla: API de una biblioteca con el recurso `libros` (`id`, `t
 ### Requisitos
 
 - Node.js 24 o superior (`.nvmrc` indica la versión) y npm.
+- Una base de datos MongoDB y su cadena de conexión.
 - Git.
 - Una herramienta para probar la API: Postman, Thunder Client (extensión de VS Code) o `curl`.
 
@@ -119,7 +120,7 @@ Copia `.env.example` como `.env` y completa los valores. `.env` está en `.gitig
 | Variable | Descripción | Valor por defecto |
 |---|---|---|
 | `PORT` | Puerto en el que escucha el servidor | `3000` |
-| `DB_FILE` | Ruta del archivo SQLite | `./data/biblioteca.sqlite` |
+| `MONGODB_URI` | Cadena de conexión a MongoDB. Es obligatoria y contiene credenciales: nunca la subas a Git | ninguno |
 | `API_KEY` | Si tiene valor, `POST`, `PUT` y `DELETE` exigen el header `x-api-key` con ese valor | vacía (sin autenticación) |
 
 TODO [R4] Actualiza esta tabla con las variables de tu proyecto.
@@ -140,7 +141,7 @@ TODO [R7] Sustituye esta tabla por los endpoints de tu proyecto.
 |---|---|---|---|---|
 | GET | `/` | Mensaje de bienvenida | | 200 |
 | GET | `/libros` | Lista todos los libros | | 200 |
-| GET | `/libros/:id` | Obtiene un libro por su id | | 200, 404 |
+| GET | `/libros/:id` | Obtiene un libro por su id (un ObjectId de 24 caracteres hexadecimales) | | 200, 404 |
 | POST | `/libros` | Crea un libro | `{ "titulo": "...", "autor": "...", "anio": 1955, "disponible": true }` (`titulo` y `autor` obligatorios) | 201, 400, 401 |
 | PUT | `/libros/:id` | Actualiza los campos enviados | cualquiera de los campos anteriores | 200, 400, 401, 404 |
 | DELETE | `/libros/:id` | Elimina un libro | | 204, 401 |
@@ -156,11 +157,12 @@ curl -X POST http://localhost:3000/libros \
   -H "Content-Type: application/json" \
   -d '{"titulo":"Pedro Páramo","autor":"Juan Rulfo","anio":1955}'
 
-curl -X PUT http://localhost:3000/libros/1 \
+# Usa el campo id que devolvió el POST
+curl -X PUT http://localhost:3000/libros/ID_DEL_LIBRO \
   -H "Content-Type: application/json" \
   -d '{"disponible":false}'
 
-curl -X DELETE http://localhost:3000/libros/1
+curl -X DELETE http://localhost:3000/libros/ID_DEL_LIBRO
 ```
 
 Si definiste `API_KEY`, agrega `-H "x-api-key: TU_CLAVE"` a las peticiones `POST`, `PUT` y `DELETE`.
@@ -172,7 +174,7 @@ src/
   index.js         Arranque del servidor (lee PORT desde la configuración)
   app.js           Configuración de Express, sin listen()
   config/          Variables de entorno con dotenv
-  db/              Conexión, esquema y funciones de acceso a datos
+  db/              Conexión a MongoDB, esquema (Schema) y funciones de acceso a datos
   middlewares/     Logger, validación, API key y manejo de errores
   routes/          Rutas del recurso
   views/           Vistas EJS (solo si activas el punto extra E2)
@@ -186,7 +188,7 @@ docs/              Documentación del curso y guías
 npm test
 ```
 
-Las pruebas usan una base de datos en memoria y el `fetch` incorporado de Node; no necesitan instalar nada más ni modifican tus datos. Cubren los códigos de estado de cada ruta (200, 201, 204, 400, 401, 404 y 500).
+Las pruebas usan el ejecutor integrado de Node y el `fetch` incorporado, pero **necesitan una base MongoDB en marcha**. Se conectan a `mongodb://127.0.0.1:27017/biblioteca_test` (o a la que indiques en la variable de entorno `MONGODB_URI_PRUEBAS` de tu terminal) y **borran los libros de esa base al empezar**; nunca usan la base de tu `.env`. Cubren los códigos de estado de cada ruta (200, 201, 204, 400, 401, 404 y 500).
 
 ### Depuración
 

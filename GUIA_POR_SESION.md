@@ -1,6 +1,6 @@
 # Guía por sesión
 
-La plantilla ya funciona desde el primer día: con un ejemplo de API de libros que guarda datos en SQLite. En cada sesión no empiezas desde cero; **lees, entiendes y adaptas** una parte más al dominio que elijas.
+La plantilla ya funciona desde el primer día: con un ejemplo de API de libros que guarda datos en MongoDB. En cada sesión no empiezas desde cero; **lees, entiendes y adaptas** una parte más al dominio que elijas.
 
 Las referencias «Manual §x.y» y «Ej. x.y» remiten a las secciones y ejercicios del manual del curso. Un resumen de lo que dice cada sección está en [docs/REQUISITOS_DEL_MANUAL.md](docs/REQUISITOS_DEL_MANUAL.md). Los ejercicios y las actividades de cada sesión (por ejemplo, `info-entorno.js` o `inventario.js`) se entregan aparte del proyecto, según indica el manual.
 
