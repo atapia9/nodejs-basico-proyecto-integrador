@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Libros</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #999; padding: 0.4rem 0.8rem; text-align: left; }
+    tr.no-disponible td { color: #777; text-decoration: line-through; }
+  </style>
+</head>
+<body>
+  <h1>Libros de la biblioteca</h1>
+  <table>
+    <thead>
+      <tr><th>Id</th><th>Título</th><th>Autor</th><th>Año</th><th>Disponible</th></tr>
+    </thead>
+    <tbody>
+      <% libros.forEach(function (libro) { %>
+        <tr class="<%= libro.disponible ? '' : 'no-disponible' %>">
+          <td><%= libro.id %></td>
+          <td><%= libro.titulo %></td>
+          <td><%= libro.autor %></td>
+          <td><%= libro.anio ?? '' %></td>
+          <td><%= libro.disponible ? 'Sí' : 'No' %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>
