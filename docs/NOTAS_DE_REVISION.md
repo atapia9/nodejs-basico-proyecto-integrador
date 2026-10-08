@@ -154,6 +154,12 @@ Con `require('dotenv').config()` la versión 18.0.6 escribe en consola `injected
 - **Riesgo para el curso:** `npm audit fix --force` «arregla» el aviso instalando `nodemon` 1.14.10, que es una versión mucho más antigua. El README advierte que no se ejecute ese comando.
 - **Estado:** Informativo. Conviene revisar de nuevo antes del 19 de octubre.
 
+### N24. El CI fija la imagen `ubuntu-24.04`
+
+GitHub avisó el 8 de octubre de 2026 que la etiqueta `ubuntu-latest` migrará a Ubuntu 26 a partir del 19 de octubre, primer día del curso. Para que el CI no cambie de entorno durante la semana, `ci.yml` fija `ubuntu-24.04`. Más adelante habrá que actualizar esa versión; conviene revisarlo después del curso.
+
+- **Estado:** Informativo.
+
 ## Decisiones de diseño que salen del prompt
 
 ### N18. La plantilla no versiona `.vscode/launch.json`
