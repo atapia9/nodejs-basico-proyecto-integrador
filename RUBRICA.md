@@ -41,4 +41,4 @@ Si los 20 puntos se reparten entre el examen y el proyecto, o si los puntos extr
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

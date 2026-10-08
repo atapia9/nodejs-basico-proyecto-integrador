@@ -46,4 +46,4 @@ TODO [E1] Cuando tu API esté desplegada, escribe la URL pública en la sección
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

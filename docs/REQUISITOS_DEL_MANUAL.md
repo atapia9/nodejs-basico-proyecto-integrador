@@ -156,4 +156,4 @@ El manual construye una API de tareas a lo largo de las sesiones 4 y 5. Es el do
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic). Pendiente de revisión por la persona responsable del curso.
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

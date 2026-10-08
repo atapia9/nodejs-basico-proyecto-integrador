@@ -85,4 +85,4 @@ El cierre de la sesión (12:20 a 13:00) es la «Evaluación final y entrega del 
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

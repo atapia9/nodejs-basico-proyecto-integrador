@@ -65,4 +65,4 @@ Los criterios y sus porcentajes están en [RUBRICA.md](RUBRICA.md). Lo que debes
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

@@ -4,7 +4,7 @@ Plantilla (starter) del proyecto integrador final del curso **Node.js Básico**,
 
 La plantilla incluye una API de ejemplo mínima y funcional sobre el recurso «libros», con Express y **MongoDB (Mongoose)**. Esta es la rama `variante-mongoose`; la rama `main` es la misma API con SQLite. **No es la solución**: es el punto de partida que debes reemplazar por tu propio dominio.
 
-> Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+> Este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.
 
 Este README tiene dos partes:
 
