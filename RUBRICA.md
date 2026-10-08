@@ -37,7 +37,7 @@ El manual dice que el proyecto es «la base de la evaluación final (20 puntos)�
 | Documentación | 15 % | 3 |
 | **Total** | **100 %** | **20** |
 
-Si los 20 puntos se reparten entre el examen y el proyecto, o si los puntos extra suman aparte, la tabla cambia. Ver las notas N2 y N3 en [docs/NOTAS_DE_REVISION.md](docs/NOTAS_DE_REVISION.md).
+Si los 20 puntos se reparten entre el examen y el proyecto, o si los puntos extra suman aparte, la tabla cambia.
 
 ---
 
