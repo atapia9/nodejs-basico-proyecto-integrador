@@ -424,6 +424,15 @@ async function verificarEjecucion() {
     fila('2. humo con curl', FALLA, 'curl no está instalado');
     return;
   }
+  // La variante con Mongoose necesita una base MongoDB en marcha; se toma de MONGODB_URI.
+  if (JSON.parse(leer('package.json')).dependencies?.mongoose && !process.env.MONGODB_URI) {
+    fila(
+      '2. npm ci, npm test, npm start y humo con curl',
+      OMITIDO,
+      'variante Mongoose: define MONGODB_URI con una base MongoDB para ejecutar esta comprobación'
+    );
+    return;
+  }
 
   // Copia limpia: solo los archivos que se versionarían, sin node_modules ni .env.
   const temporal = fs.mkdtempSync(path.join(os.tmpdir(), 'verificar-plantilla-'));
