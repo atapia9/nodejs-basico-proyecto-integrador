@@ -19,6 +19,7 @@ Este README tiene dos partes:
 | [ENTREGA.md](ENTREGA.md) | Lista de verificación antes de entregar. |
 | [docs/despliegue-render.md](docs/despliegue-render.md) | Pasos para desplegar en Render (punto extra). |
 | [docs/trabajo-en-equipo.md](docs/trabajo-en-equipo.md) | Ramas y pull requests para equipos de hasta 3 personas. |
+| [Manual del curso](https://github.com/atapia9/nodejs-basico-redec-fesc) | Repositorio del manual de Node.js Básico: teoría, ejemplos y ejercicios de las cinco sesiones. Esta plantilla es parte del mismo curso. |
 
 ---
 
