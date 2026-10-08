@@ -150,10 +150,6 @@ El manual construye una API de tareas a lo largo de las sesiones 4 y 5. Es el do
 - Actividad 5 (§12): «entrega el repositorio de tu API con README, base de datos, variables de entorno y, si es posible, la URL de despliegue.»
 - Requisitos previos (§4): cuenta de GitHub recomendable «para el proyecto integrador y control de versiones».
 
-## 5. Instrumento de evaluación final
-
-El instrumento de evaluación del curso (`Evaluacion_Diagnostica_Final_NodeJS.docx`) define un examen de 10 reactivos de opción múltiple, dos por sesión. En la aplicación final cada acierto vale 2 puntos (máximo 20) y corresponde al rubro «Evaluación final» del curso. La depuración (§5.3) no se evalúa en ese instrumento.
-
 ---
 
 Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.
