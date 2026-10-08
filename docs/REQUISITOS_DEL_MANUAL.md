@@ -145,7 +145,6 @@ El manual construye una API de tareas a lo largo de las sesiones 4 y 5. Es el do
 ## 4. Datos del curso que afectan la entrega
 
 - Curso presencial de 20 horas, cinco sesiones de cuatro horas, del 19 al 23 de octubre de 2026, de 09:00 a 13:00 hrs (portada y §5 a §9).
-- Rubros de evaluación del curso (§3): evaluación diagnóstica (no pondera), asistencia 40 puntos, actividades de aprendizaje 40 puntos, evaluación final 20 puntos; total 100. Calificación mínima aprobatoria: 8.00 en una escala de 0 a 10.
 - Cierre de la Sesión 5 (12:20 a 13:00): «Evaluación final y entrega del proyecto integrador» (§9).
 - Actividad 5 (§12): «entrega el repositorio de tu API con README, base de datos, variables de entorno y, si es posible, la URL de despliegue.»
 - Requisitos previos (§4): cuenta de GitHub recomendable «para el proyecto integrador y control de versiones».
