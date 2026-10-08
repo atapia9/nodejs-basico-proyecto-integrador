@@ -528,16 +528,6 @@ function verificarRubrica(seccion10) {
 
   const suma = tabla.reduce((total, c) => total + c.porcentaje, 0);
   fila('3. Los porcentajes de RUBRICA.md suman 100', suma === 100 ? OK : FALLA, `suma = ${suma} %`);
-
-  const propuesta = (rubrica.split('## Propuesta')[1] || '').split(/\n## /)[0];
-  const puntos = [...propuesta.matchAll(/^\|\s*([^|*]+?)\s*\|\s*(\d+)\s*%\s*\|\s*(\d+)\s*\|\s*$/gm)];
-  const totalPuntos = puntos.reduce((total, m) => total + Number(m[3]), 0);
-  const coincide = puntos.every((m) => Number(m[3]) === (Number(m[2]) * 20) / 100);
-  fila(
-    '3. Propuesta de conversión a 20 puntos',
-    puntos.length === tabla.length && totalPuntos === 20 && coincide ? AVISO : FALLA,
-    `suma ${totalPuntos} puntos, proporcional a los porcentajes; marcada como propuesta pendiente de confirmación`
-  );
 }
 
 // ------------------------------------------- 4. secretos y datos personales
@@ -800,9 +790,6 @@ function imprimir() {
   }
   const cuenta = (r) => filas.filter((f) => f.resultado === r).length;
   console.log(`\nResumen: ${cuenta(OK)} OK, ${cuenta(AVISO)} aviso(s), ${cuenta(OMITIDO)} omitido(s), ${cuenta(FALLA)} falla(s).`);
-  if (cuenta(AVISO)) {
-    console.log('AVISO: la propuesta de conversión a 20 puntos de RUBRICA.md espera confirmación de la persona responsable del curso.');
-  }
 }
 
 async function principal() {

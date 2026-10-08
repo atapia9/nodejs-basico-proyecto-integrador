@@ -23,22 +23,6 @@ Esta tabla orienta a quien desarrolla y a quien revisa; la redacción es de esta
 | Calidad del código | Organización en carpetas (`config`, `db`, `middlewares`, `routes`), al menos un middleware propio y el manejador de errores de cuatro parámetros al final de `src/app.js`. |
 | Documentación | Que el README explique cómo instalar, configurar las variables de entorno, ejecutar y qué endpoints existen. |
 
-## Propuesta: conversión a los 20 puntos de la evaluación final
-
-> **Propuesta pendiente de confirmación.** No forma parte del manual y no debe aplicarse hasta que la persona responsable del curso la confirme.
-
-El manual dice que el proyecto es «la base de la evaluación final (20 puntos)». Existe además un examen de 10 reactivos que vale 2 puntos por acierto (máximo 20) como rubro «Evaluación final». Mientras no se aclare cómo se combinan, esta propuesta supone que **el proyecto equivale a los 20 puntos** y aplica los porcentajes del manual:
-
-| Criterio | Peso | Puntos propuestos |
-|---|---|---|
-| Funcionalidad CRUD completa | 40 % | 8 |
-| Persistencia y configuración | 25 % | 5 |
-| Calidad del código | 20 % | 4 |
-| Documentación | 15 % | 3 |
-| **Total** | **100 %** | **20** |
-
-Si los 20 puntos se reparten entre el examen y el proyecto, o si los puntos extra suman aparte, la tabla cambia.
-
 ---
 
 Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.
