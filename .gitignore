@@ -1,0 +1,23 @@
+# Dependencias (Manual §5.2 y §5.4: node_modules y .env nunca se suben)
+node_modules/
+
+# Variables de entorno: .env se ignora, .env.example sí se versiona
+.env
+.env.*
+!.env.example
+
+# Base de datos local (SQLite)
+data/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.db
+
+# Registros y archivos del sistema
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Material del instructor (manual y evaluación con clave de respuestas); no es parte de la plantilla
+fuentes/
