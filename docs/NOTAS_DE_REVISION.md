@@ -160,6 +160,19 @@ GitHub avisó el 8 de octubre de 2026 que la etiqueta `ubuntu-latest` migrará a
 
 - **Estado:** Informativo.
 
+### N25. La variante Mongoose se ejecutó solo en el CI
+
+- **Qué se verificó:** las 21 pruebas de la rama `variante-mongoose` pasan en GitHub Actions contra un servicio `mongo:8`. En el equipo de desarrollo no había MongoDB ni Docker, así que allí solo se comprobaron el esquema, la serialización de `id`, la validación del modelo y los mensajes de error sin base de datos.
+- **Qué no se ejecutó contra MongoDB:** el humo con `curl` y la persistencia tras reiniciar el servidor. `npm run verificar` lo hace si se define `MONGODB_URI` con una base de pruebas.
+- **Recomendación:** antes del curso, ejecutar `MONGODB_URI=... npm run verificar` en la rama `variante-mongoose` con una base MongoDB de pruebas (local o en la nube).
+- **Estado:** Pendiente.
+
+### N26. Solución de referencia: el punto extra E1 no está realizado
+
+El repositorio privado `nodejs-basico-proyecto-integrador-solucion` (catálogo de recetas) resuelve R1 a R7 y los puntos extra E2 (vista EJS) y E3 (filtros y paginación), con 27 pruebas. No está desplegada: E1 requiere una cuenta y un servicio propios. Usa SQLite; no incluye la variante Mongoose.
+
+- **Estado:** Informativo.
+
 ## Decisiones de diseño que salen del prompt
 
 ### N18. La plantilla no versiona `.vscode/launch.json`
