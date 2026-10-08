@@ -3,24 +3,28 @@ const { describe, it, before, after, mock } = require('node:test');
 const assert = require('node:assert/strict');
 
 // Clave de prueba, sin relación con ninguna clave real. Se define antes de cargar la app.
-process.env.DB_FILE = ':memory:';
+// La base de pruebas es la misma que usa libros.test.js (ver el aviso en ese archivo).
+process.env.MONGODB_URI = process.env.MONGODB_URI_PRUEBAS || 'mongodb://127.0.0.1:27017/biblioteca_test';
 process.env.API_KEY = 'clave-de-prueba';
 
 const app = require('../src/app');
+const { conectar, desconectar } = require('../src/db');
 
 let servidor;
 let base;
 
 before(async () => {
   mock.method(console, 'log', () => {});
+  await conectar();
   await new Promise((resolver) => {
     servidor = app.listen(0, '127.0.0.1', resolver);
   });
   base = `http://127.0.0.1:${servidor.address().port}`;
 });
 
-after(() => {
+after(async () => {
   servidor.close();
+  await desconectar();
   mock.restoreAll();
 });
 
