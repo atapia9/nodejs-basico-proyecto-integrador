@@ -2,7 +2,7 @@
 
 Fuente única de verdad: `fuentes/Manual_NodeJS_Basico_ilustrado_v3.docx` («Manual del curso Node.js Básico», REDEC · UNAM FES Cuautitlán, Educación Continua FESC; sesiones del 19 al 23 de octubre de 2026).
 
-Este documento resume lo que el manual pide al proyecto integrador, sin interpretar más allá del texto. Lo que el manual deja ambiguo se registra en [NOTAS_DE_REVISION.md](NOTAS_DE_REVISION.md).
+Este documento resume lo que el manual pide al proyecto integrador, sin interpretar más allá del texto.
 
 **Convención de citas.** El manual numera sus secciones principales del 1 al 12 (por ejemplo, «§10 Proyecto integrador final») y numera las subsecciones de cada sesión con el número de la sesión: «§2.1» es la subsección 2.1 (Sesión 2, NPM). «Ej. 4.3» es el ejercicio 4.3 y «Fig. 4.2» es la figura 4.2.
 
@@ -32,7 +32,7 @@ Este documento resume lo que el manual pide al proyecto integrador, sin interpre
 | E2 | Agregar una vista renderizada con EJS para al menos una de las rutas. |
 | E3 | Incluir paginación o filtros mediante query params en el endpoint de listado. |
 
-El manual no indica cuántos puntos vale cada punto extra (ver nota N3).
+El manual no indica cuántos puntos vale cada punto extra.
 
 ### Criterios de evaluación del proyecto
 
@@ -112,7 +112,7 @@ Para cada sección se anota lo que el manual dice, el ejercicio asociado y dónd
 - `node --inspect index.js` y `node --inspect-brk index.js`; `chrome://inspect`; configuración `.vscode/launch.json` con `"type": "node"`, `"request": "launch"` y `"program": "${workspaceFolder}/index.js"`.
 - Breakpoints, panel de variables, consola de depuración y stack de llamadas.
 - **Ej. 5.3:** depurar un script con un error que entrega el instructor y documentar la causa raíz.
-- **En la plantilla:** guía de depuración en el README y configuración de VS Code apuntando a `src/index.js` (ver nota N18).
+- **En la plantilla:** guía de depuración en el README y configuración de VS Code apuntando a `src/index.js`.
 
 ### §5.4 Introducción al despliegue
 
@@ -127,7 +127,7 @@ Pasos generales para desplegar una API Express en Render (texto del manual):
 
 - Render y Railway se conectan a GitHub y despliegan en cada push; Vercel ejecuta funciones serverless y no mantiene un proceso permanente.
 - **Ej. 5.4:** subir el proyecto a GitHub, desplegar en Render o Railway con la base de datos conectada, configurar variables desde el panel y verificar la URL pública.
-- **En la plantilla:** `docs/despliegue-render.md` reproduce estos seis pasos (ver notas N8 y N10).
+- **En la plantilla:** `docs/despliegue-render.md` reproduce estos seis pasos.
 
 ## 3. El ejemplo de la API de «tareas»
 
@@ -152,7 +152,7 @@ El manual construye una API de tareas a lo largo de las sesiones 4 y 5. Es el do
 
 ## 5. Instrumento de evaluación final
 
-`fuentes/Evaluacion_Diagnostica_Final_NodeJS.docx` define un examen de 10 reactivos de opción múltiple, dos por sesión. En la aplicación final cada acierto vale 2 puntos (máximo 20) y corresponde al rubro «Evaluación final» del curso. La depuración (§5.3) no se evalúa en ese instrumento. Esto entra en tensión con la frase de §10 («el proyecto constituye la base de la evaluación final») y se registra como nota N2.
+El instrumento de evaluación del curso (`Evaluacion_Diagnostica_Final_NodeJS.docx`) define un examen de 10 reactivos de opción múltiple, dos por sesión. En la aplicación final cada acierto vale 2 puntos (máximo 20) y corresponde al rubro «Evaluación final» del curso. La depuración (§5.3) no se evalúa en ese instrumento.
 
 ---
 
