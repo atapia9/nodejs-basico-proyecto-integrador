@@ -1,0 +1,38 @@
+name: Tarea del proyecto
+description: Una tarea concreta del proyecto integrador (útil para repartir el trabajo en equipo)
+title: "[Tarea] "
+labels: []
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción
+      description: Qué hay que hacer, en una o dos frases.
+    validations:
+      required: true
+  - type: dropdown
+    id: requisito
+    attributes:
+      label: Requisito relacionado
+      description: Los requisitos son los de ESPECIFICACION.md (sección 10 del manual).
+      options:
+        - R1 Dominio propio
+        - R2 CRUD completo
+        - R3 Persistencia en MongoDB o SQLite
+        - R4 Variables de entorno
+        - R5 Middleware personalizado
+        - R6 Errores centralizados y códigos de estado
+        - R7 README
+        - E1 Despliegue (extra)
+        - E2 Vista EJS (extra)
+        - E3 Paginación o filtros (extra)
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      description: Cómo sabremos que la tarea está terminada.
+      placeholder: "- [ ] ..."
+    validations:
+      required: false

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Verificar que no se versionen .env ni node_modules
+        run: |
+          archivos=$(git ls-files | grep -E '(^|/)(\.env|node_modules)(/|$)' || true)
+          if [ -n "$archivos" ]; then
+            echo "Estos archivos no deben estar en el repositorio:"
+            echo "$archivos"
+            exit 1
+          fi
+          echo "Correcto: ni .env ni node_modules están versionados."
+
+      - name: Instalar Node.js (versión de .nvmrc)
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar pruebas
+        run: npm test
