@@ -12,7 +12,7 @@ El texto de la columna «Requisito» es el del manual. Las etiquetas R1 a R7 apa
 |---|---|---|
 | R1 | Elegir un dominio propio: por ejemplo, gestión de una biblioteca, control de gastos personales, catálogo de recetas, seguimiento de hábitos, etc. | La plantilla trae el ejemplo «libros» solo para mostrar el patrón. Sustitúyelo por tu dominio en `src/routes/`, `src/db/` y `src/middlewares/validar-libro.js`. |
 | R2 | Definir al menos un recurso principal con operaciones CRUD completas (GET, GET por id, POST, PUT, DELETE). | `src/routes/libros.js` implementa las cinco operaciones del ejemplo. |
-| R3 | Persistir los datos en MongoDB o SQLite (no se acepta almacenamiento únicamente en memoria). | `src/db/` usa SQLite (better-sqlite3). La rama `variante-mongoose` usa MongoDB con Mongoose. |
+| R3 | Persistir los datos en MongoDB o SQLite (no se acepta almacenamiento únicamente en memoria). | `src/db/` usa MongoDB con Mongoose. La rama `main` usa SQLite (better-sqlite3). |
 | R4 | Usar variables de entorno (dotenv) para toda configuración sensible. | `src/config/index.js` lee `process.env`; los nombres están en `.env.example` y `.env` está en `.gitignore`. |
 | R5 | Incluir al menos un middleware personalizado (logging, validación o autenticación simple). | `src/middlewares/`: `logger.js`, `validar-libro.js` y `api-key.js`. |
 | R6 | Manejar errores de forma centralizada y devolver códigos de estado HTTP apropiados. | `src/middlewares/errores.js`, declarado al final de `src/app.js`, y los códigos de la tabla de más abajo. |

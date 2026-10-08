@@ -1,31 +1,19 @@
-// Conexión y esquema de la base de datos (Manual §5.1, opción B: SQLite con better-sqlite3).
-// SQLite guarda todo en un solo archivo y no necesita un servidor externo.
-const fs = require('node:fs');
-const path = require('node:path');
-const Database = require('better-sqlite3');
+// Conexión a la base de datos (Manual §5.1, opción A: MongoDB con Mongoose).
+// El esquema y el modelo del recurso están en src/db/libros.js.
+const mongoose = require('mongoose');
 const config = require('../config');
 
-function abrirBaseDeDatos(archivo) {
-  // Crea la carpeta del archivo (por ejemplo data/) si todavía no existe.
-  if (archivo !== ':memory:') {
-    fs.mkdirSync(path.dirname(archivo), { recursive: true });
+async function conectar() {
+  if (!config.mongodbUri) {
+    throw new Error('Falta la variable de entorno MONGODB_URI (consulta .env.example).');
   }
-
-  const db = new Database(archivo);
-
-  // TODO [R3] Adapta el esquema a tu dominio: nombre de la tabla, columnas y restricciones.
-  // SQLite no tiene tipo booleano: se guarda como INTEGER (0 o 1) y src/db/libros.js lo convierte.
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS libros (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      titulo TEXT NOT NULL,
-      autor TEXT NOT NULL,
-      anio INTEGER,
-      disponible INTEGER NOT NULL DEFAULT 1
-    )
-  `);
-
-  return db;
+  // Si MongoDB no responde en 5 segundos se lanza un error en lugar de esperar 30 s.
+  await mongoose.connect(config.mongodbUri, { serverSelectionTimeoutMS: 5000 });
+  console.log('Conectado a MongoDB');
 }
 
-module.exports = abrirBaseDeDatos(config.archivoBd);
+async function desconectar() {
+  await mongoose.disconnect();
+}
+
+module.exports = { conectar, desconectar };

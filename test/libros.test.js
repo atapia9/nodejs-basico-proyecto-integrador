@@ -3,13 +3,16 @@
 const { describe, it, before, after, mock } = require('node:test');
 const assert = require('node:assert/strict');
 
-// Las pruebas usan una base de datos en memoria: no tocan data/ ni tu archivo .env.
+// Las pruebas necesitan una base MongoDB en marcha. Usan MONGODB_URI si está definida (por ejemplo,
+// en el CI) y, si no, una base local llamada biblioteca_test: nunca la base de tu proyecto.
+// ATENCIÓN: al empezar se borran todos los libros de esa base de pruebas.
 // Estas variables deben definirse ANTES de cargar la app; dotenv no sobrescribe las que ya existen.
-process.env.DB_FILE = ':memory:';
+process.env.MONGODB_URI = process.env.MONGODB_URI_PRUEBAS || 'mongodb://127.0.0.1:27017/biblioteca_test';
 process.env.API_KEY = '';
 
 const app = require('../src/app');
 const libros = require('../src/db/libros');
+const { conectar, desconectar } = require('../src/db');
 
 let servidor;
 let base;
@@ -17,14 +20,17 @@ let base;
 before(async () => {
   // Silencia el logger para que la salida de las pruebas sea legible.
   mock.method(console, 'log', () => {});
+  await conectar();
+  await libros.Libro.deleteMany({});
   await new Promise((resolver) => {
     servidor = app.listen(0, '127.0.0.1', resolver); // puerto 0: el sistema asigna uno libre
   });
   base = `http://127.0.0.1:${servidor.address().port}`;
 });
 
-after(() => {
+after(async () => {
   servidor.close();
+  await desconectar();
   mock.restoreAll();
 });
 
@@ -95,11 +101,11 @@ describe('GET /libros/:id', () => {
   });
 
   it('responde 404 si el libro no existe', async () => {
-    const { estado } = await pedir('GET', '/libros/999999');
+    const { estado } = await pedir('GET', '/libros/000000000000000000000000');
     assert.equal(estado, 404);
   });
 
-  it('responde 404 si el id no es un número', async () => {
+  it('responde 404 si el id no tiene formato de ObjectId', async () => {
     const { estado } = await pedir('GET', '/libros/abc');
     assert.equal(estado, 404);
   });
@@ -115,7 +121,7 @@ describe('PUT /libros/:id', () => {
   });
 
   it('responde 404 si el libro no existe', async () => {
-    const { estado } = await pedir('PUT', '/libros/999999', { titulo: 'Nada' });
+    const { estado } = await pedir('PUT', '/libros/000000000000000000000000', { titulo: 'Nada' });
     assert.equal(estado, 404);
   });
 
@@ -140,7 +146,7 @@ describe('DELETE /libros/:id', () => {
   // El manual (§4.3 y Fig. 4.2) solo contempla 204. Si decides responder 404 cuando el id
   // no existe (TODO [R6] en src/routes/libros.js), cambia también esta prueba.
   it('responde 204 aunque el id no exista (como en el manual)', async () => {
-    const { estado } = await pedir('DELETE', '/libros/999999');
+    const { estado } = await pedir('DELETE', '/libros/000000000000000000000000');
     assert.equal(estado, 204);
   });
 });
