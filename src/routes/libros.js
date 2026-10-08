@@ -18,16 +18,17 @@
 // TODO [R2] Verifica que tu recurso tenga las cinco operaciones del CRUD con los códigos
 // de estado de la tabla anterior.
 const { Router } = require('express');
+const mongoose = require('mongoose');
 const libros = require('../db/libros');
 const validarLibro = require('../middlewares/validar-libro');
 const requerirApiKey = require('../middlewares/api-key');
 
 const router = Router();
 
-// Convierte el parámetro de ruta en un entero; devuelve null si no es un número válido.
+// MongoDB identifica los documentos con un ObjectId (texto de 24 caracteres hexadecimales).
+// Devuelve el id del parámetro de ruta o null si no tiene ese formato (la ruta responde 404).
 function leerId(req) {
-  const id = Number(req.params.id);
-  return Number.isInteger(id) ? id : null;
+  return mongoose.isValidObjectId(req.params.id) ? req.params.id : null;
 }
 
 // GET /libros -> 200

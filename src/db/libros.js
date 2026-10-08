@@ -1,67 +1,62 @@
-// Capa de acceso a datos del recurso «libros».
+// Esquema, modelo y capa de acceso a datos del recurso «libros» con Mongoose (Manual §5.1).
 //
-// better-sqlite3 es síncrono, pero estas funciones se declaran async para que las rutas
-// usen async/await (Manual §3.2) y no cambien si más adelante pasas a Mongoose, cuyas
-// operaciones sí son asíncronas (rama variante-mongoose).
-const db = require('./index');
+// Las funciones tienen la misma forma que en la rama principal (SQLite): son async y devuelven
+// el libro, undefined o null si no existe, y un booleano al eliminar. Por eso las rutas apenas
+// cambian entre las dos variantes.
+const mongoose = require('mongoose');
 
-// Convierte la fila de SQLite (disponible = 0 o 1) en el objeto que devuelve la API.
-function aLibro(fila) {
-  return fila && { ...fila, disponible: Boolean(fila.disponible) };
+// TODO [R3] Adapta el esquema a tu dominio: el Schema define los campos, sus tipos y sus
+// validaciones; el Model, creado a partir de él, ofrece create(), find(), etc.
+const libroSchema = new mongoose.Schema(
+  {
+    titulo: { type: String, required: true, trim: true },
+    autor: { type: String, required: true, trim: true },
+    anio: { type: Number, default: null },
+    disponible: { type: Boolean, default: true },
+  },
+  {
+    versionKey: false,
+    toJSON: {
+      // MongoDB usa _id (un ObjectId); la API expone un campo id de tipo texto.
+      transform: (documento, resultado) => {
+        const { _id, ...resto } = resultado;
+        return { id: _id.toString(), ...resto };
+      },
+    },
+  }
+);
+
+const Libro = mongoose.model('Libro', libroSchema);
+
+const CAMPOS = ['titulo', 'autor', 'anio', 'disponible'];
+
+// Se queda solo con los campos del esquema que vengan definidos en la petición.
+function soloCampos(datos) {
+  return Object.fromEntries(CAMPOS.filter((c) => datos[c] !== undefined).map((c) => [c, datos[c]]));
 }
 
-// Las consultas usan parámetros (? y @nombre): nunca concatenes datos del cliente en el SQL.
-const sentencias = {
-  listar: db.prepare('SELECT * FROM libros ORDER BY id'),
-  obtener: db.prepare('SELECT * FROM libros WHERE id = ?'),
-  crear: db.prepare(
-    'INSERT INTO libros (titulo, autor, anio, disponible) VALUES (@titulo, @autor, @anio, @disponible)'
-  ),
-  actualizar: db.prepare(
-    'UPDATE libros SET titulo = @titulo, autor = @autor, anio = @anio, disponible = @disponible WHERE id = @id'
-  ),
-  eliminar: db.prepare('DELETE FROM libros WHERE id = ?'),
-};
-
-// TODO [E3] Punto extra: paginación o filtros. Recibe aquí limite, desplazamiento o un
-// filtro (por ejemplo autor) y agrégalo al SQL con parámetros; luego léelo de req.query en la ruta.
+// TODO [E3] Punto extra: paginación o filtros. Recibe aquí pagina, limite o un filtro
+// (por ejemplo autor) y úsalo con .find(filtro).skip(...).limit(...); luego léelo de req.query en la ruta.
 async function listar() {
-  return sentencias.listar.all().map(aLibro);
+  return Libro.find().sort({ _id: 1 });
 }
 
 async function obtener(id) {
-  return aLibro(sentencias.obtener.get(id));
+  return Libro.findById(id);
 }
 
-async function crear({ titulo, autor, anio = null, disponible = true }) {
-  const resultado = sentencias.crear.run({
-    titulo,
-    autor,
-    anio,
-    disponible: disponible ? 1 : 0,
-  });
-  return obtener(Number(resultado.lastInsertRowid));
+async function crear(datos) {
+  return Libro.create(soloCampos(datos));
 }
 
-// Actualiza solo los campos recibidos; devuelve undefined si el libro no existe.
+// Actualiza solo los campos recibidos; devuelve null si el libro no existe.
 async function actualizar(id, cambios) {
-  const actual = await obtener(id);
-  if (!actual) return undefined;
-
-  const nuevo = {
-    id,
-    titulo: cambios.titulo ?? actual.titulo,
-    autor: cambios.autor ?? actual.autor,
-    anio: cambios.anio ?? actual.anio,
-    disponible: cambios.disponible ?? actual.disponible,
-  };
-  sentencias.actualizar.run({ ...nuevo, disponible: nuevo.disponible ? 1 : 0 });
-  return obtener(id);
+  return Libro.findByIdAndUpdate(id, soloCampos(cambios), { returnDocument: 'after', runValidators: true });
 }
 
 // Devuelve true si se eliminó un libro y false si no existía.
 async function eliminar(id) {
-  return sentencias.eliminar.run(id).changes > 0;
+  return Boolean(await Libro.findByIdAndDelete(id));
 }
 
-module.exports = { listar, obtener, crear, actualizar, eliminar };
+module.exports = { Libro, listar, obtener, crear, actualizar, eliminar };

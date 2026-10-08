@@ -17,8 +17,10 @@ function manejadorDeErrores(err, req, res, next) {
   // Si la respuesta ya empezó a enviarse, Express debe cerrar la conexión.
   if (res.headersSent) return next(err);
 
-  // Los errores del parser de JSON (cuerpo mal formado) traen status 400.
-  const estado = Number.isInteger(err.status) && err.status >= 400 && err.status < 600 ? err.status : 500;
+  // Los errores del parser de JSON (cuerpo mal formado) traen status 400. Los de validación del
+  // esquema de Mongoose (ValidationError) también son un error del cliente: 400.
+  let estado = Number.isInteger(err.status) && err.status >= 400 && err.status < 600 ? err.status : 500;
+  if (err.name === 'ValidationError') estado = 400;
 
   if (estado >= 500) console.error(err);
 
