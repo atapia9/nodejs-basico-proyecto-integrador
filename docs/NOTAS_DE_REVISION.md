@@ -195,10 +195,10 @@ La plantilla necesita explicar cómo usarla (para el alumno que la recibe) y, a 
 
 ### N21. Nota de divulgación del uso de Claude
 
-Los documentos generados incluyen una nota de divulgación. Línea sugerida para la portada del README: «Este material fue elaborado con asistencia de Claude (Anthropic) y revisado por [nombre].» Falta el nombre de la persona que lo revisa.
+Los documentos generados incluyen una nota de divulgación. Línea sugerida para la portada del README: «Este material fue elaborado con asistencia de Claude (Anthropic) y revisado por [nombre].» La revisión la hace Armando, y su nombre ya figura en la portada del README y en el pie de los documentos.
 
-- **Estado:** Pendiente.
+- **Estado:** Resuelto.
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic). Pendiente de revisión por la persona responsable del curso.
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

@@ -46,4 +46,4 @@ El manual no indica el canal ni la fecha límite para enviar estos datos: el ins
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.

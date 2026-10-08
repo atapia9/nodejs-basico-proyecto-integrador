@@ -62,4 +62,4 @@ El manual no dice cómo se evalúa la aportación individual. El historial de co
 
 ---
 
-Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic).
+Nota de divulgación: este material fue elaborado con asistencia de Claude (Anthropic) y revisado por Armando.
